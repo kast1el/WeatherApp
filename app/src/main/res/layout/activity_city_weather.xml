@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.CityWeatherActivity">
+    <data>
+        <variable
+            name="cityWeather"
+            type="com.kmaryin.weaterapp.viewmodel.CityWeatherViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/degrees_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{cityWeather.degrees}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/degrees_label"
+            app:layout_constraintLeft_toRightOf="@id/degrees_label"
+            android:text="@{cityWeather.degreesSymbol}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
