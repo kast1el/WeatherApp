@@ -1,5 +1,6 @@
 package com.kmaryin.weatherapp.ui.activity;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,6 +20,10 @@ public class CityWeatherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityCityWeatherBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_city_weather);
+
+        Toolbar toolbar = binding.getRoot().findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         viewModel = ViewModelProviders
                 .of(this, getViewModelFactory())

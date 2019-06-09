@@ -1,25 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.kmaryin.weatherapp.ui.activity.CityWeatherActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
+    tools:context=".ui.activity.CityWeatherActivity">
+    <data>
+        <variable
+            name="cityWeather"
+            type="com.kmaryin.weatherapp.viewmodel.CityWeatherViewModel" />
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:background="?colorPrimary">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
 
-    <include layout="@layout/content_city_weather" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/screenPadding">
+            <TextView
+                android:id="@+id/degrees_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{cityWeather.degrees}"
+                android:textSize="@dimen/textLarge"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/degrees_label"
+                app:layout_constraintLeft_toRightOf="@id/degrees_label"
+                android:text="@{cityWeather.degreesSymbol}"
+                android:textSize="@dimen/textLarge"/>
+
+            <TextView
+                android:id="@+id/city_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{cityWeather.city}"
+                app:layout_constraintTop_toBottomOf="@id/degrees_label"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="@dimen/textMedium"/>
+
+            <TextView
+                android:id="@+id/description_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/city_label"
+                android:text="@string/description"
+                android:textSize="@dimen/textSmall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/description_label"
+                app:layout_constraintLeft_toRightOf="@id/description_label"
+                android:text="@{cityWeather.description}"
+                android:textSize="@dimen/textSmall"/>
+
+            <TextView
+                android:id="@+id/pressure_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_label"
+                android:text="@string/pressure"
+                android:textSize="@dimen/textSmall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/pressure_label"
+                app:layout_constraintLeft_toRightOf="@id/pressure_label"
+                android:text="@{cityWeather.pressure}"
+                android:textSize="@dimen/textSmall"/>
+
+            <TextView
+                android:id="@+id/humidity_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pressure_label"
+                android:text="@string/humidity"
+                android:textSize="@dimen/textSmall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/humidity_label"
+                app:layout_constraintLeft_toRightOf="@id/humidity_label"
+                android:text="@{cityWeather.humidity}"
+                android:textSize="@dimen/textSmall"/>
+
+            <TextView
+                android:id="@+id/wind_speed_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/humidity_label"
+                android:text="@string/wind_speed"
+                android:textSize="@dimen/textSmall"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/wind_speed_label"
+                app:layout_constraintLeft_toRightOf="@id/wind_speed_label"
+                android:text="@{cityWeather.windSpeed}"
+                android:textSize="@dimen/textSmall"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

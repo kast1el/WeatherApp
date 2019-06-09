@@ -15,6 +15,7 @@ public class CityWeatherViewModel extends BaseViewModel implements OnLocationObt
     private WeatherRepository weatherRepository;
     private LocationProvider locationProvider;
 
+    private boolean loading;
     private String degrees;
     private String city;
     private String description;
@@ -63,9 +64,13 @@ public class CityWeatherViewModel extends BaseViewModel implements OnLocationObt
     }
 
     private void reloadWeatherData(double latitude, double longitude) {
+        setLoading(true);
         async().execute(
                 () -> weatherRepository.getCurrentWeatherForLocation(latitude, longitude),
-                this::displayCurrentWeather);
+                (model) -> {
+                    setLoading(false);
+                    displayCurrentWeather(model);
+                });
     }
 
     private void displayCurrentWeather(CurrentWeatherModel model) {
@@ -79,6 +84,16 @@ public class CityWeatherViewModel extends BaseViewModel implements OnLocationObt
         setPressure(Integer.toString(model.getPressure()));
         setHumidity(Integer.toString(model.getHumidity()));
         setWindSpeed(Float.toString(model.getWindSpeed()));
+    }
+
+    @Bindable
+    public Boolean getLoading() {
+        return loading;
+    }
+
+    public void setLoading(Boolean loading) {
+        this.loading = loading;
+        notifyPropertyChanged(BR.loading);
     }
 
     @Bindable
