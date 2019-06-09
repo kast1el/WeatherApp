@@ -6,11 +6,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import java.lang.ref.WeakReference;
+
 public class LocationProvidingManager implements LocationProvider, LocationListener {
     private static final int LOCATION_ACCURACY = 100;
 
     private LocationManager locationManager;
-    private OnLocationObtainedListener listener;
+    private WeakReference<OnLocationObtainedListener> listenerReference;
 
     public LocationProvidingManager(LocationManager locationManager) {
         this.locationManager = locationManager;
@@ -20,21 +22,22 @@ public class LocationProvidingManager implements LocationProvider, LocationListe
     @Override
     public void obtain() {
         locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
-        onLocationChanged(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
     }
 
     @Override
     public void setOnLocationObtainedListener(OnLocationObtainedListener listener) {
-        this.listener = listener;
+        this.listenerReference = new WeakReference<>(listener);
     }
 
     @Override
     public void onLocationChanged(Location location) {
         if (location != null && location.getAccuracy() < LOCATION_ACCURACY) {
+            OnLocationObtainedListener listener = listenerReference != null ? listenerReference.get() : null;
             if (listener != null) {
                 listener.locationObtained(location.getLatitude(), location.getLongitude());
             }
 
+            listenerReference = null;
             locationManager.removeUpdates(this);
         }
     }
